@@ -22,6 +22,7 @@
     }
     .vCode{
       height: 36px;
+      cursor: pointer;
     }
   </style>
 </head>
@@ -35,7 +36,7 @@
             <h3 class="panel-title">登录学生管理系统</h3>
           </div>
           <div class="panel-body">
-            <form class="form-horizontal">
+            <form action="/manager/login" method="post"  class="form-horizontal">
               <div class="form-group">
                 <label for="userName" class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-10">
@@ -54,13 +55,13 @@
                   <input type="text" name="vCode" class="form-control" id="vCode" placeholder="请输入验证码">
                 </div>
                 <div class="col-sm-4">
-                  <img class='vCode' src="/img/code.png" alt="">
+                  <img class='vCode' src="/manager/vcode" alt="">
                 </div>
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                   <button type="submit" class="btn btn-success">登陆</button>
-                  <a class="btn btn-danger">注册</a>
+                  <a href="/manager/register" class="btn btn-danger">注册</a>
                 </div>
               </div>
             </form>
@@ -77,3 +78,13 @@
 <script src="/bootstrap/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- 点击刷新验证码 -->
+<script>
+  $(function(){
+    $('.vCode').click(function(){
+      // 浏览器 发现url地址 没有改变 
+      // 可以人为的在url的后面拼接上 随机的字符 让浏览器人为 这个文件已被改变 重新请求数据
+      $(this).attr('src',"/manager/vcode?"+Date.now());
+    })
+  })
+</script>
