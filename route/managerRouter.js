@@ -17,20 +17,23 @@ router.get('/login', (req, res) => {
 })
 
 // 登陆路由 数据提交
+// 登陆判断 记录登录状态
 router.post('/login',(req,res)=>{
     // session数据
     // 获取数据 表单数据
     let userName = req.body.userName;
     let userPass = req.body.userPass;
-    let vCode = req.body.vCode;
+    let vCode = req.body.vCode.toLowerCase();
 
     // 判断验证码
-    if(vCode==req.session.captcha){
+    if(vCode==req.session.captcha.toLowerCase()){
         // res.send('正确')
         // 再去验证用户名密码
         helper.find('admin',{userName,userPass},(result)=>{
             // res.send(result);
             if(result.length!=0){
+                // 记录登陆状态
+                req.session.userName = userName;
                 // 去首页
                 res.redirect('/student/index');
             }else{

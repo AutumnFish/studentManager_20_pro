@@ -40,13 +40,13 @@
               <div class="form-group">
                 <label for="userName" class="col-sm-2 control-label">用户名</label>
                 <div class="col-sm-10">
-                  <input type="text" name="userName" class="form-control" id="userName" placeholder="请输入用户名">
+                  <input type="text" name="userName" value="赵*天" class="form-control" id="userName" placeholder="请输入用户名">
                 </div>
               </div>
               <div class="form-group">
                 <label for="userPass" class="col-sm-2 control-label">密码</label>
                 <div class="col-sm-10">
-                  <input type="password" name="userPass" class="form-control" id="userPass" placeholder="请输入密码">
+                  <input type="password" name="userPass" value="1234" class="form-control" id="userPass" placeholder="请输入密码">
                 </div>
               </div>
               <div class="form-group">
@@ -60,7 +60,7 @@
               </div>
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
-                  <button type="submit" class="btn btn-success">登陆</button>
+                  <button type="submit" class="btn btn-success login">登陆</button>
                   <a href="/manager/register" class="btn btn-danger">注册</a>
                 </div>
               </div>
@@ -78,6 +78,8 @@
 <script src="/bootstrap/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- md5加密js -->
+<script src="/md5/md5.min.js"></script>
 <!-- 点击刷新验证码 -->
 <script>
   $(function(){
@@ -85,6 +87,21 @@
       // 浏览器 发现url地址 没有改变 
       // 可以人为的在url的后面拼接上 随机的字符 让浏览器人为 这个文件已被改变 重新请求数据
       $(this).attr('src',"/manager/vcode?"+Date.now());
+    })
+
+    $('.vCode').click();
+
+    // 测试加密
+    $('.login').click(function(event){
+      // 阻止默认行为
+      // event.preventDefault();
+      let value =$("#userPass").val();
+      // console.log(md5(value));// 直接加密 安全系数较低
+      // console.log(md5(value,'keyboard cat'));// '加盐' 额外的增加一些 加密的字符 字符可以随意 增加密码的安全性
+      // 重新赋值给Dom元素
+      $('#userPass').val(md5(value,'keyboard cat'));
+      // 只能写在最后
+      // return false;
     })
   })
 </script>

@@ -51,8 +51,8 @@
 
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-              <p class="navbar-text navbar-right " style="font-weight: 700">欢迎 【sky】登录
-                <a href="#" class="logout">退出</a>
+              <p class="navbar-text navbar-right " style="font-weight: 700">欢迎 【{{userName}}】登录
+                <a href="/student/logout" class="logout">退出</a>
               </p>
             </div>
             <!-- /.navbar-collapse -->
@@ -87,16 +87,17 @@
             </ol>
           </div>
           <div class="panel-heading">
-            <form class="form-inline">
+            <!-- action 不写 就是当前页面 method 不写 就是 get -->
+            <form  class="form-inline">
               <div class="form-group">
                 <label class="sr-only" for="exampleInputAmount">Amount (in dollars)</label>
                 <div class="input-group">
                   <div class="input-group-addon">学生姓名</div>
-                  <input type="text" class="form-control" placeholder="请输入学生姓名进行查询">
+                  <input type="text" value="{{keyword}}" class="form-control" name="search" placeholder="请输入学生姓名进行查询">
                 </div>
               </div>
               <button type="submit" class="btn btn-success">查找</button>
-              <a href="#" class="btn btn-warning">新增</a>
+              <a href="/student/insert" class="btn btn-warning">新增</a>
             </form>
           </div>
           <div class="panel-body">
@@ -111,18 +112,19 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">产品经理不好当1</th>
-                  <td>1</td>
-                  <td>男</td>
-                  <td>188</td>
-                  <td>
-                    <button class='btn btn-success'>编辑🍞</button>
-                    
-                    <button class='btn btn-danger'>删除👍</button>
-                  </td>
-                </tr>
-
+                {{each result value}}
+                  <tr data-id={{value._id}}>
+                    <th scope="row">{{value.userName}}</th>
+                    <td>{{value.userAge}}</td>
+                    <td>{{value.userMale}}</td>
+                    <td>{{value.userMobile}}</td>
+                    <td>
+                      <button onclick="edit({{value._id}})" class='btn btn-success'>编辑🍞</button>
+                      
+                      <button onclick="del({{value._id}})" class='btn btn-danger'>删除👍</button>
+                    </td>
+                  </tr>
+                {{/each}}
               </tbody>
             </table>
           </div>
@@ -138,3 +140,16 @@
 <script src="/bootstrap/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<script>
+    function del(id){
+      // console.log(id);
+      if(confirm('你真的要这样吗?')){
+        // 跳转页面
+        window.location = '/student/delete/'+id;
+      }
+    }
+    // 编辑方法
+    function edit(id){
+      window.location = '/student/edit/'+id;
+    }
+</script>

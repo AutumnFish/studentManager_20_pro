@@ -20,7 +20,8 @@
     .login-panel {
       margin-top: 200px;
     }
-    .vCode{
+
+    .vCode {
       height: 36px;
     }
   </style>
@@ -48,10 +49,10 @@
                   <input type="password" name="userPass" class="form-control" id="userPass" placeholder="请输入密码">
                 </div>
               </div>
-      
+
               <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-4">
-                  <button type="submit" class="btn btn-danger btn-block">注册</button>
+                  <button type="submit" class="btn btn-danger btn-block register">注册</button>
                 </div>
               </div>
             </form>
@@ -68,3 +69,17 @@
 <script src="/bootstrap/js/jquery-1.12.4.js"></script>
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="/bootstrap/js/bootstrap.min.js"></script>
+<!-- md5加密 -->
+<script src="/md5/md5.min.js"></script>
+<script>
+  $(function () {
+    // 点击注册时 加密 密码
+    $('.register').click(function (event) {
+      // 阻止默认行为
+      let value = $("#userPass").val();
+      // 重新赋值给Dom元素
+      $('#userPass').val(md5(value, 'keyboard cat'));
+    })
+
+  })
+</script>
